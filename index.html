@@ -3,68 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <title>Create an Account</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      border: 2px solid black;
-    }
-
-    .container {
-      border: 2px solid black;
-      padding: 40px;
-      width: 300px;
-      box-sizing: border-box;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="tel"] {
-      width: 100%;
-      padding: 8px;
-      margin: 6px 0;
-      box-sizing: border-box;
-      border: 2px solid black;
-    }
-
-    button {
-      width: 100%;
-      padding: 8px;
-      margin-top: 10px;
-      background-color: white;
-      border: 2px solid black;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #f0f0f0;
-    }
-  </style>
+  <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
 
   <div class="container">
     <h2>Create an Account</h2>
-    <form>
+    <form onsubmit="return validatePasswords()">
       <input type="text" placeholder="Username" required>
       <input type="email" placeholder="Email" required>
       <input type="text" placeholder="Country" required>
       <input type="text" placeholder="City" required>
       <input type="tel" placeholder="Phone" required>
-      <input type="password" placeholder="Password" required>
+
+     
+      <div class="password-wrapper">
+        <input type="password" id="password" placeholder="Password" required>
+        <span class="password-toggle-icon" onclick="togglePassword('password', this)">👁</span>
+      </div>
+
+
+      <div class="password-wrapper">
+        <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+        <span class="password-toggle-icon" onclick="togglePassword('confirm-password', this)">👁</span>
+      </div>
+
+      <div id="error-message" class="error-message"></div>
+
       <button type="submit">Register</button>
     </form>
   </div>
 
+
+  <script>
+    function togglePassword(fieldId, iconElement) {
+      const input = document.getElementById(fieldId);
+      if (input.type === "password") {
+        input.type = "text";
+        iconElement.textContent = "🙈";
+      } else {
+        input.type = "password";
+        iconElement.textContent = "👁";
+      }
+    }
+
+    function validatePasswords() {
+      const password = document.getElementById("password").value;
+      const confirm = document.getElementById("confirm-password").value;
+      const error = document.getElementById("error-message");
+
+      if (password !== confirm) {
+        error.textContent = "❌ Passwords do not match.";
+        return false;
+      }
+
+      error.textContent = "";
+      return true;
+    }
+  </script>
+
 </body>
 </html>
+
